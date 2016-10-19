@@ -256,6 +256,33 @@ def server_connect(server1_val, server2_val, object1, object2, options):
     return (server1, server2)
 
 
+def _get_difference(list1, list2):
+    """
+    some elem exists in list1 but not in list2
+    """
+    res = []
+    for item in list1:
+        if list2.count(item) == 0:
+            res.append(item)
+    return res
+
+def _get_common(list1, list2):
+    """
+    elem exists in list1 and exists in list2
+    """
+    res = []
+    for item in list1:
+        if list2.count(item) == 1:
+            res.append(item)
+    return res
+
+def get_common_lists_keep_order(list1, list2):
+    a_and_b = _get_common(list1, list2)
+    a_diff_b = _get_difference(list1, list2)
+    b_diff_a = _get_difference(list2, list1)
+
+    return a_and_b, a_diff_b, b_diff_a
+
 def get_common_lists(list1, list2):
     """Compare the items in two lists
 

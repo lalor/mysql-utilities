@@ -996,8 +996,7 @@ class SQLTransformer(object):
         Returns tuple - (drop, add/changes)
         """
         from mysql.utilities.common.table import Table
-        from mysql.utilities.common.dbcompare import get_common_lists
-
+        from mysql.utilities.common.dbcompare import get_common_lists_keep_order
         # Get the Table instances
         self.dest_tbl = Table(self.destination_db.source, "%s.%s" %
                               (dest_db, dest_name))
@@ -1015,7 +1014,7 @@ class SQLTransformer(object):
                    for idx in self.src_tbl.get_tbl_indexes()]
 
         # Now we determine the indexes we need to add and those to drop
-        _, drop_idx, add_idx = get_common_lists(dest_idx, src_idx)
+        _, drop_idx, add_idx = get_common_lists_keep_order(dest_idx, src_idx)
         if not drop_idx and not add_idx:
             return ([], [])
 
@@ -1086,7 +1085,6 @@ class SQLTransformer(object):
         Returns list - ALTER TABLE statements for transforming the table
         """
         statements = []
-
         # Collect a list of all of the ALTER clauses. Order is important in
         # building an ALTER TABLE statement. For safety (and correct execution)
         # we must order the clauses as follows:

@@ -43,3 +43,5 @@ coverage.xml
 
 # Result file used by some MUT tests
 mysql-test/result.txt
+tags
+scripts/
